@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
+const solarRoute = require('./solar');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+function route(app) {
+	app.use('/', solarRoute);
+}
 
-module.exports = router;
+module.exports = route;
