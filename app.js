@@ -27,6 +27,8 @@ app.use(connectLivereload());
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.set('view engine', 'pug');
 
+// Middleware
+// app.use(login());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
