@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const UserModel = require('../models/User');
 class User {
 	// GET
 	login(req, res) {
@@ -7,10 +8,15 @@ class User {
 	// POST
 	async confirm(req, res) {
 		const { username, password } = req.body;
-
+		const user = await UserModel.findOne({ username, password });
 		if (username.trim() === '' || password.trim() === '') {
 			return res.render('login', {
 				message: 'Bạn cần điền thông tin vào ô trống',
+			});
+		}
+		if (!user) {
+			return res.render('login', {
+				message: 'Đăng nhập thất bại',
 			});
 		}
 		const token = jwt.sign(
@@ -19,7 +25,15 @@ class User {
 		);
 		return res
 			.cookie('token', token, { expires: new Date(Date.now() + 900000) })
-			.json('Thanh cong');
+			.redirect('/');
+	}
+	// GET /
+	index(req, res) {
+		res.render('index');
+	}
+	// GET /logout
+	logout(req, res) {
+		res.clearCookie('token').redirect('/login');
 	}
 }
 module.exports = new User();

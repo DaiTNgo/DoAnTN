@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var livereload = require('livereload');
 var connectLivereload = require('connect-livereload');
+var methodOverride = require('method-override');
 
 const db = require('./config/db');
 const route = require('./routes/index');
@@ -28,6 +29,8 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 app.set('view engine', 'pug');
 
 // Middleware
+const auth = require('./app/middleware/auth');
+app.use(methodOverride('_method'));
 // app.use(login());
 app.use(logger('dev'));
 app.use(express.json());

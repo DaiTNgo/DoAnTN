@@ -17,3 +17,6 @@ Content-Type: application/json
     "startDay": "2021-11-07 16:21:36" ,
     "endDay": "2021-11-07 16:22:" 
 }
+
+###
+DELETE  http://localhost:3000/logout

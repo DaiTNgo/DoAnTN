@@ -1,6 +1,10 @@
 extends ./layouts/layout 
 
 block content
-  h1 title hi
-  p Welcome to #{title}
-  h1 hello word
+    h1 title hi
+    p Welcome to #{title}
+    h1 hello word
+    form(method="POST" action="/logout?_method=DELETE")
+        button(type="submit") Delete
+
+
