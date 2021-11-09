@@ -10,12 +10,12 @@ Content-Type: application/json
 GET http://localhost:3000/api
 
 ###
-DELETE  http://localhost:3000/api
+DELETE  http://localhost:3000/api/delete
 Content-Type: application/json
 
 {
-    "startDay": "2021-11-07 16:21:36" ,
-    "endDay": "2021-11-07 16:22:" 
+    "startDay": "2021-11-07 00:00:" ,
+    "endDay": "2021-11-09 00:00:" 
 }
 
 ###

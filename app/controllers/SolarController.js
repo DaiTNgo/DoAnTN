@@ -15,10 +15,6 @@ class Solar {
 				// 	$gt: new Date('2021-11-07 0:'),
 				// 	$lt: new Date('2021-12-07 0:'),
 				// },
-				// createdAt: {
-				// 	$gt: '2021-11-08T13:10:48.203Z',
-				// 	$lt: '2021-11-08T13:11:00.203Z',
-				// },
 			},
 			{ volt: 1, amp: 1, _id: 0, createdAt: 1 }
 		).lean();
@@ -51,7 +47,7 @@ class Solar {
 	// [POST] /api/date
 	async getDate(req, res) {
 		const { date } = req.body;
-		const currentDate = Date.parse(date);
+		const currentDate = new Date(date).getTime();
 		const nextDate = currentDate + 24 * 60 * 60 * 1000;
 		const data = await SolarModel.find(
 			{
@@ -60,8 +56,8 @@ class Solar {
 					$lt: nextDate,
 				},
 			},
-			{ _id: 0, createdAt: 1 }
-		);
+			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
+		).lean();
 
 		res.json(data);
 	}
@@ -69,7 +65,6 @@ class Solar {
 		const { date } = req.body;
 		const currentHour = new Date(date).setMinutes(0);
 		const nextHour = currentHour + 60 * 60 * 1000;
-
 		const data = await SolarModel.find(
 			{
 				createdAt: {
@@ -77,22 +72,10 @@ class Solar {
 					$lt: nextHour,
 				},
 			},
-			{ _id: 0, createdAt: 1 }
-		);
+			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
+		).lean();
 
 		res.json(data);
-	}
-	getTime(current, next, type) {
-		switch (type) {
-			case 'date':
-				return;
-			case 'hour':
-				return;
-			case 'month':
-				return;
-			default:
-				return;
-		}
 	}
 }
 module.exports = new Solar();

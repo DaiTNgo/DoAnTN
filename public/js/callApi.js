@@ -2,8 +2,6 @@ document.getElementById('getData').onclick = async () => {
 	const a = Date.now();
 	const data = await axios.get('http://localhost:3000/api/time');
 	console.log(a);
-	// console.log(data.data);
-
 	[...data.data].forEach((element) => {
 		if (
 			Date.parse(element.createdAt) > Date.parse('2021-11-07 17:') &&
@@ -61,14 +59,59 @@ document.getElementById('getData').onclick = async () => {
 };
 
 document.getElementById('date').onblur = async (e) => {
-	const data = await axios({
+	const value = await axios({
 		method: 'post',
 		url: 'http://localhost:3000/api/date',
 		data: {
 			date: e.target.value,
 		},
 	});
-	console.log(data.data);
+	const arrDate = [...value.data];
+	let isCheckLess = false;
+	let isCheckGreater = false;
+	// const a = value.data[890].createdAt;
+	// const b = new Date(a).getTime();
+	// const c = new Date(a).setHours(20);
+	// console.log(c);
+	// console.log(b);
+	// console.log(b > c);
+	// console.log(new Date(c));
+	// console.log(new Date(b));
+	const arrHour = [];
+	const length = value.data.length;
+	const start = new Date(value.data[0].createdAt);
+	const end = new Date(value.data[length - 1].createdAt);
+	const TOTAL_MINUTE = 59;
+	const startHour = start.getHours();
+	const startMinute = start.getMinutes();
+	const endHour = end.getHours();
+	const endMinute = end.getMinutes();
+	const preIndex = 0;
+	for (let i = TOTAL_MINUTE - startMinute; i < length; i += 59) {
+		do {
+			if (
+				new Date(arrDate[i].createdAt).getTime() <
+				new Date(arrDate[i].createdAt).setHours(
+					new Date(arrDate[i].createdAt).getHours() + 1
+				)
+			) {
+				isCheckLess = true;
+				if (isCheckGreater) {
+					return i;
+				}
+				i++;
+			} else {
+				isCheckGreater = true;
+				i--;
+				if (isCheckLess) {
+					return i;
+				}
+			}
+		} while (!(isCheckLess && isCheckGreater));
+		arrHour = arrHour.push(value.data.splice(0, i - preIndex + 1));
+		preIndex = i;
+	}
+	console.log(arrHour);
 };
 document.getElementById('hour').onblur = async (e) => {
 	const data = await axios({
