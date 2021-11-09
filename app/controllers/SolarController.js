@@ -6,29 +6,26 @@ class Solar {
 		await newData.save();
 		return res.json({ message: 'success' });
 	}
-	// [GET]
+	// [GET] /api/time
 	async receive(req, res) {
-		/*
-		var startDate = moment(req.params.startTime)
-			.utcOffset('+0700')
-			.format('YYYY-MM-DDTHH:mm:ss.SSSZ'); //req.params.startTime = 2016-09-25 00:00:00
-		var endDate = moment(req.params.endTime)
-			.utcOffset('+0700')
-			.format('YYYY-MM-DDTHH:mm:ss.SSSZ'); //req.params.endTime = 2016-09-25 01:00:00
-        */
 		//Find
 		const data = await SolarModel.find(
 			{
-				createdAt: {
-					$gt: new Date('2021-11-07 15:25:'),
-					$lt: new Date('2021-11-07 15:30:'),
-				},
+				// createdAt: {
+				// 	$gt: new Date('2021-11-07 0:'),
+				// 	$lt: new Date('2021-12-07 0:'),
+				// },
+				// createdAt: {
+				// 	$gt: '2021-11-08T13:10:48.203Z',
+				// 	$lt: '2021-11-08T13:11:00.203Z',
+				// },
 			},
-			{ volt: 1, amp: 1, _id: 0 }
+			{ volt: 1, amp: 1, _id: 0, createdAt: 1 }
 		).lean();
+
 		return res.json(data);
 	}
-	// Delete data {dev}
+	// [DELETE] data {dev} /api/delete
 	async delete(req, res) {
 		const { startDay, endDay } = req.body;
 		await SolarModel.deleteMany({
@@ -38,6 +35,64 @@ class Solar {
 			},
 		});
 		res.json('OK!');
+	}
+	// [DELETE] /api/delete/date
+	async deleteDate(req, res) {
+		const { date } = req.body;
+
+		await SolarModel.findOneAndDelete({
+			createdAt: {
+				$eq: date,
+			},
+		});
+
+		res.json('OK!');
+	}
+	// [POST] /api/date
+	async getDate(req, res) {
+		const { date } = req.body;
+		const currentDate = Date.parse(date);
+		const nextDate = currentDate + 24 * 60 * 60 * 1000;
+		const data = await SolarModel.find(
+			{
+				createdAt: {
+					$gte: currentDate,
+					$lt: nextDate,
+				},
+			},
+			{ _id: 0, createdAt: 1 }
+		);
+
+		res.json(data);
+	}
+	async getHour(req, res) {
+		const { date } = req.body;
+		const currentHour = new Date(date).setMinutes(0);
+		const nextHour = currentHour + 60 * 60 * 1000;
+
+		const data = await SolarModel.find(
+			{
+				createdAt: {
+					$gte: currentHour,
+					$lt: nextHour,
+				},
+			},
+			{ _id: 0, createdAt: 1 }
+		);
+
+		res.json(data);
+	}
+	getTime(current, next, type) {
+		switch (type) {
+			case 'date':
+				return;
+			case 'hour':
+				return;
+			case 'month':
+				return;
+			default:
+				return;
+		}
 	}
 }
 module.exports = new Solar();

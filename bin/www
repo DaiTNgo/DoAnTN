@@ -89,4 +89,4 @@ let v = 1,
 	a = 1;
 setInterval(() => {
 	postData('http://localhost:3000/api', { volt: v++, amp: a++ });
-}, 10000);
+}, 60000);
