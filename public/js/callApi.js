@@ -34,29 +34,45 @@ document.getElementById('getData').onclick = async () => {
 };
 
 document.getElementById('date').onblur = async (e) => {
-	const value = await axios({
+	const date = await axios({
 		method: 'post',
 		url: 'http://localhost:3000/api/date',
 		data: {
 			date: e.target.value,
 		},
 	});
-
 	// Tách giờ trong ngày
-	const arrDate = [...value.data];
-	const arrHour = sliceHour(arrDate, value.data);
+	const arrDate = [...date.data];
+	const arrHour = sliceHour(arrDate, date.data);
 	console.log(arrHour);
 };
 
 document.getElementById('hour').onblur = async (e) => {
-	const data = await axios({
+	const hour = await axios({
 		method: 'post',
 		url: 'http://localhost:3000/api/hour',
 		data: {
 			date: e.target.value,
 		},
 	});
-	console.log(data.data);
+	console.log(hour.data);
+};
+document.getElementById('month').onblur = async (e) => {
+	const date = e.target.value;
+	const currentMonth = new Date(date).getMonth() + 1;
+	const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
+	let year = new Date(date).getFullYear();
+	year = currentMonth === 12 ? year + 1 : year;
+	const month = await axios({
+		method: 'post',
+		url: 'http://localhost:3000/api/month',
+		data: {
+			currentMonth: `${year}-${currentMonth}-1 0:`,
+			nextMonth: `${year}-${nextMonth}-1 0:`,
+		},
+	});
+	const arrDay = sliceDay([...month.data], month.data);
+	console.log('~ arrDay', arrDay);
 };
 
 function sliceHour(cloneArr, pureArr) {
@@ -92,7 +108,7 @@ function sliceHour(cloneArr, pureArr) {
 	const length = pureArr.length;
 	const start = new Date(pureArr[0].createdAt);
 	const MINUTE_MAX = 59;
-	const TOTAL_MINUTES = 60;
+	const TOTAL_CALL = 60;
 	let startHour = start.getHours();
 	let startMinute = start.getMinutes();
 	let preIndex = 0;
@@ -100,7 +116,7 @@ function sliceHour(cloneArr, pureArr) {
 	for (
 		let i = MINUTE_MAX - startMinute;
 		i < length || cloneArr.length !== 0;
-		i += TOTAL_MINUTES
+		i += TOTAL_CALL
 	) {
 		let isCheckLess = false;
 		let isCheckGreater = false;
@@ -144,4 +160,72 @@ function sliceHour(cloneArr, pureArr) {
 			startHour = new Date(cloneArr[0].createdAt).getHours();
 	}
 	return arrHour;
+}
+// --------------------------------
+function sliceDay(cloneArr, pureArr) {
+	const arrDay = [];
+	const length = pureArr.length;
+	const start = new Date(pureArr[0].createdAt);
+	const TOTAL_CALL = (24 * 60) / 5; // giảm đi 5 lần để test còn thực tế thì không / 5;
+	let startDay = start.getDate();
+	let preIndex = 0;
+	let amountDate = getDateInMonth(start.getFullYear(), start.getMonth() + 1);
+
+	for (let i = 0; i < length || cloneArr.length !== 0; i += TOTAL_CALL) {
+		let isCheckLess = false;
+		let isCheckGreater = false;
+
+		if (i > length) {
+			i = length - 1;
+		}
+
+		do {
+			const point = new Date(pureArr[i].createdAt).getTime();
+			let nextDate;
+			if (startDay === amountDate) {
+				nextDate =
+					new Date(pureArr[i].createdAt).setDate(
+						startDay === amountDate ? 1 : startDay + 1
+					) +
+					amountDate * 24 * 60 * 60 * 1000;
+			} else {
+				nextDate = new Date(pureArr[i].createdAt).setDate(startDay + 1);
+			}
+			const timeline = new Date(nextDate).setHours(0, 0, 0, 0);
+
+			if (point < timeline && i === length - 1) {
+				isCheckLess = true;
+				isCheckGreater = true;
+				continue;
+			}
+
+			if (point < timeline) {
+				isCheckLess = true;
+
+				if (!isCheckGreater) {
+					i++;
+				}
+			} else {
+				isCheckGreater = true;
+				i--;
+			}
+		} while (!(isCheckLess && isCheckGreater));
+		arrDay.push(cloneArr.splice(0, i - preIndex + 1));
+		preIndex = i + 1;
+		if (cloneArr.length !== 0)
+			startDay = new Date(cloneArr[0].createdAt).getDate();
+	}
+	return arrDay;
+}
+
+function getDateInMonth(year, month) {
+	let leap = 0;
+	const list = [1, 3, 5, 7, 8, 10, 12];
+	if (year % 400 === 0) leap = 1;
+	else if (year % 100 === 0) leap = 0;
+	else if (year % 4 === 0) leap = 1;
+	if (month == 2) return 28 + leap;
+	const inList = list.findIndex((ele) => ele === month);
+	if (inList !== -1) return 31;
+	return 30;
 }

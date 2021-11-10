@@ -58,7 +58,6 @@ class Solar {
 			},
 			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
 		).lean();
-
 		res.json(data);
 	}
 	async getHour(req, res) {
@@ -70,6 +69,20 @@ class Solar {
 				createdAt: {
 					$gte: currentHour,
 					$lt: nextHour,
+				},
+			},
+			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
+		).lean();
+
+		res.json(data);
+	}
+	async getMonth(req, res) {
+		const { currentMonth, nextMonth } = req.body;
+		const data = await SolarModel.find(
+			{
+				createdAt: {
+					$gte: new Date(currentMonth).getTime(),
+					$lt: new Date(nextMonth).getTime(),
 				},
 			},
 			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }

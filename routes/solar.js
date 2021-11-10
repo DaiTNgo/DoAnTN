@@ -4,6 +4,7 @@ const SolarController = require('../app/controllers/SolarController');
 
 router.post('/date', SolarController.getDate);
 router.post('/hour', SolarController.getHour);
+router.post('/month', SolarController.getMonth);
 router.post('/', SolarController.send);
 router.get('/time', SolarController.receive);
 router.delete('/delete/date', SolarController.deleteDate);
