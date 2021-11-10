@@ -81,7 +81,12 @@ function sliceHour(cloneArr, pureArr) {
 	 *  TOTAL_MINUTES = 60 vì một phút call 1 lần, 1h call 60 lần
 	 *  i < length || cloneArr.length !== 0; vì để kiểm tra xem thử nếu mà i+=60 mà vượt quá length
 	 *  nhưng cloneArr chưa rỗng thì mình phải lặp tiếp để lấy tất cả những phần còn lại
-	 *
+	 *  nếu i > length thì mình xét 2 TH:
+	 *  1. pureArr[length-1].createdAt < timeline
+	 *    - thì mình sẽ lấy tất cả các phần tử từ đầu đến cuối mảng
+	 *  2. pureArr[length-1].createdAt > timeline
+	 *    - thì mình vẫn theo luồng logic là giảm i đến lúc nào point < timeline thì mình sẽ lấy từ đầu đến điểm i đó
+	 *    - rồi lặp lại đến khi hết mảng thì thôi
 	 */
 	const arrHour = [];
 	const length = pureArr.length;
@@ -99,12 +104,11 @@ function sliceHour(cloneArr, pureArr) {
 	) {
 		let isCheckLess = false;
 		let isCheckGreater = false;
-		//  Cảm thấy logic này chưa được nếu i > length
+
 		if (i > length) {
 			i = length - 1;
-			isCheckLess = true;
-			isCheckGreater = true;
 		}
+
 		do {
 			const point = new Date(pureArr[i].createdAt).getTime();
 			// new Date(pureArr[i].createdAt): lấy ngày và setHours = startHour + 1
@@ -114,13 +118,21 @@ function sliceHour(cloneArr, pureArr) {
 				0,
 				0
 			);
+			// kiểm tra dk là lúc i > length; khi i>length thì mình gán i = length -1 rồi
+			// nên ở đây mình xét nếu i === length - 1
+
+			if (point < timeline && i === length - 1) {
+				isCheckLess = true;
+				isCheckGreater = true;
+				continue;
+			}
+
 			if (point < timeline) {
 				isCheckLess = true;
-				// không cần xét cái này vì kiểu chi mình + 60 hén cũng lớn hơn nên check cái else trước hết
 
-				// if (!isCheckGreater) {
-				// 	i++;
-				// }
+				if (!isCheckGreater) {
+					i++;
+				}
 			} else {
 				isCheckGreater = true;
 				i--;
