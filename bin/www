@@ -88,5 +88,8 @@ const postData = require('../public/js/fakeApi');
 let v = 1,
 	a = 1;
 setInterval(() => {
-	postData('http://localhost:3000/api', { volt: v++, amp: a++ });
+	postData('http://localhost:3000/api', {
+		volt: (v += Math.random() * 100),
+		amp: (a += Math.random() * 10),
+	});
 }, 60000);

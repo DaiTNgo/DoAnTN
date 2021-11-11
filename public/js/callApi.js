@@ -45,6 +45,7 @@ document.getElementById('date').onblur = async (e) => {
 	const arrDate = [...date.data];
 	const arrHour = sliceHour(arrDate, date.data);
 	console.log(arrHour);
+	render(arrHour);
 };
 
 document.getElementById('hour').onblur = async (e) => {
@@ -121,10 +122,9 @@ function sliceHour(cloneArr, pureArr) {
 		let isCheckLess = false;
 		let isCheckGreater = false;
 
-		if (i > length) {
+		if (i >= length) {
 			i = length - 1;
 		}
-
 		do {
 			const point = new Date(pureArr[i].createdAt).getTime();
 			// new Date(pureArr[i].createdAt): lấy ngày và setHours = startHour + 1
@@ -228,4 +228,185 @@ function getDateInMonth(year, month) {
 	const inList = list.findIndex((ele) => ele === month);
 	if (inList !== -1) return 31;
 	return 30;
+}
+
+// -------------------------------------
+function render(arrTime) {
+	const arr = arrTime.map((list) => {
+		const volt = list.reduce((total, crr) => {
+			total = total + crr.volt;
+			return total;
+		}, 0);
+		const amp = list.reduce((total, crr) => {
+			total = total + crr.amp;
+			return total;
+		}, 0);
+		return {
+			volt: volt + Math.random() * 1000,
+			amp: amp + Math.random() * 1000,
+			power: volt * amp * 1000,
+			time: new Date(list[0].createdAt).setMinutes(0, 0, 0),
+		};
+	});
+
+	// setup
+
+	const data = {
+		datasets: [
+			{
+				label: 'Amp',
+				data: arr,
+				backgroundColor: [
+					'rgba(255, 26, 104, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)',
+					'rgba(0, 0, 0, 0.2)',
+				],
+				borderColor: [
+					'rgba(255, 26, 104, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)',
+					'rgba(0, 0, 0, 1)',
+				],
+				borderWidth: 3,
+				pointStyle: 'triangle',
+				yAxisID: 'amp',
+				parsing: {
+					xAxisKey: 'time',
+					yAxisKey: 'amp',
+				},
+			},
+			{
+				label: 'Volt',
+				data: arr,
+				backgroundColor: [
+					'rgba(255, 26, 104, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)',
+					'rgba(0, 0, 0, 0.2)',
+				],
+				borderColor: [
+					'rgba(255, 26, 104, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)',
+					'rgba(0, 0, 0, 1)',
+				],
+				borderWidth: 3,
+				pointStyle: 'triangle',
+				yAxisID: 'volt',
+				parsing: {
+					xAxisKey: 'time',
+					yAxisKey: 'volt',
+				},
+			},
+			{
+				label: 'Power',
+				data: arr,
+				backgroundColor: [
+					'rgba(255, 26, 104, 0.2)',
+					'rgba(54, 162, 235, 0.2)',
+					'rgba(255, 206, 86, 0.2)',
+					'rgba(75, 192, 192, 0.2)',
+					'rgba(153, 102, 255, 0.2)',
+					'rgba(255, 159, 64, 0.2)',
+					'rgba(0, 0, 0, 0.2)',
+				],
+				borderColor: [
+					'rgba(255, 26, 104, 1)',
+					'rgba(54, 162, 235, 1)',
+					'rgba(255, 206, 86, 1)',
+					'rgba(75, 192, 192, 1)',
+					'rgba(153, 102, 255, 1)',
+					'rgba(255, 159, 64, 1)',
+					'rgba(0, 0, 0, 1)',
+				],
+				borderWidth: 3,
+				pointStyle: 'triangle',
+				yAxisID: 'power',
+				parsing: {
+					xAxisKey: 'time',
+					yAxisKey: 'power',
+				},
+			},
+		],
+	};
+
+	// config
+	const config = {
+		type: 'line',
+		data,
+		options: {
+			scales: {
+				x: {
+					grid: {
+						display: false,
+					},
+					type: 'time',
+					time: {
+						unit: 'hour',
+						displayFormats: { minute: 'HH:mm' },
+					},
+				},
+
+				volt: {
+					type: 'linear',
+					position: 'left',
+					grid: {
+						display: false,
+						borderWidth: 0,
+					},
+					ticks: {
+						color: 'rgba(255, 26, 104, 1)',
+					},
+				},
+				amp: {
+					type: 'linear',
+					position: 'left',
+					ticks: {
+						color: 'rgba(54, 162, 235, 1)',
+					},
+					grid: {
+						display: false,
+						borderWidth: 0,
+					},
+				},
+				power: {
+					type: 'linear',
+					position: 'left',
+					ticks: {
+						color: 'rgba(255, 206, 86, 1)',
+					},
+					grid: {
+						display: false,
+						borderWidth: 0,
+					},
+				},
+			},
+		},
+	};
+
+	// render init block
+	if (document.getElementById('myChart'))
+		console.log(
+			document
+				.getElementById('myChart')
+				.parentElement.removeChild(document.getElementById('myChart'))
+		);
+
+	document
+		.querySelector('.chartBox')
+		.insertAdjacentHTML('beforeend', `<canvas id="myChart"></canvas>`);
+	const myChart = new Chart(document.getElementById('myChart'), config);
 }

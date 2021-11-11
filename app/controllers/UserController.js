@@ -24,7 +24,7 @@ class User {
 			process.env.ACCESS_TOKEN_SECRET
 		);
 		return res
-			.cookie('token', token, { expires: new Date(Date.now() + 900000) })
+			.cookie('token', token, { expires: new Date(Date.now() + 3600000) })
 			.redirect('/');
 	}
 	// GET /
