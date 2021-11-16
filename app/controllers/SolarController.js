@@ -6,6 +6,7 @@ class Solar {
 		await newData.save();
 		return res.json({ message: 'success' });
 	}
+    
 	// [GET] /api/time
 	async receive(req, res) {
 		//Find

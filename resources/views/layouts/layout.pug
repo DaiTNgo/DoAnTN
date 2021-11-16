@@ -5,7 +5,10 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel='stylesheet', href='/stylesheets/style.css')
-        
+
+        link(href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
+			rel="stylesheet")
+	
         script(
             src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
             integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
@@ -15,10 +18,11 @@ html(lang="en")
         script(src="/js/chartjs-adapter-date-fns.bundle.min.js")
         title= Document
     body
+        include sidebar.pug 
+        
         .chartCard
-            .chartBox
-                //- canvas(id="myChart")
-        block content
-        script(type='module' src="/js/callApi.js")
-     
+            .chartBox 
+                block input
+        block script 
+      
     

@@ -6,11 +6,12 @@ var logger = require('morgan');
 var livereload = require('livereload');
 var connectLivereload = require('connect-livereload');
 var methodOverride = require('method-override');
+require('dotenv').config();
 
 const db = require('./config/db');
-const route = require('./routes/index');
-
 db.connect();
+
+const route = require('./routes/index');
 
 const publicDirectory = path.join(__dirname, 'public');
 
@@ -21,15 +22,15 @@ liveReloadServer.server.once('connection', () => {
 		liveReloadServer.refresh('/');
 	}, 100);
 });
+
 var app = express();
-app.use(connectLivereload());
+// app.use(connectLivereload());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'resources', 'views'));
 app.set('view engine', 'pug');
 
 // Middleware
-const auth = require('./app/middleware/auth');
 app.use(methodOverride('_method'));
 // app.use(login());
 app.use(logger('dev'));
@@ -56,7 +57,5 @@ app.use(function (err, req, res, next) {
 	res.status(err.status || 500);
 	res.render('error');
 });
-// --------------------------------------
 
-// --------------------------------------
 module.exports = app;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const uri =
-	'mongodb+srv://daingo:12345@doantn.qrqas.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const uri = `mongodb+srv://${process.env.USERNAME_MONGODB}:${process.env.PASSWORD_MONGODB}@doantn.qrqas.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+
 async function connect() {
 	try {
 		await mongoose.connect(uri, {

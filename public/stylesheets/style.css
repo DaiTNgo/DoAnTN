@@ -5,7 +5,7 @@
 }
 
 .chartCard {
-	width: 100vw;
+	width: 100%;
 	height: 100vh;
 	background: rgba(255, 26, 104, 0.2);
 	display: flex;
@@ -13,9 +13,191 @@
 	justify-content: center;
 }
 .chartBox {
+	position: relative;
 	width: 700px;
 	padding: 20px;
 	border-radius: 20px;
 	border: solid 3px rgba(255, 26, 104, 1);
 	background: white;
+}
+.time {
+	width: 185px;
+	position: absolute;
+	bottom: 8px;
+	left: 15px;
+	border-radius: 4px;
+	border: thin solid;
+	padding: 0 4px;
+}
+
+/* Sidebar */
+:root {
+	--bgc: #11101d;
+	--color-text: #fff;
+	--bgc-layout: #1d1b31;
+}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+.sidebar i {
+	flex-shrink: 0;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	line-height: 50px;
+	font-size: 20px;
+}
+.sidebar {
+	position: fixed;
+	width: 70px;
+	height: 100vh;
+	padding: 10px;
+	background-color: var(--bgc);
+	transition: 0.4s;
+}
+.sidebar.active {
+	width: 240px;
+}
+.sidebar .logo-details {
+	position: relative;
+	margin-bottom: 1rem;
+}
+.sidebar .logo-details .logo {
+	display: flex;
+	align-items: center;
+	opacity: 0;
+	transition: 0.4s;
+}
+.sidebar.active .logo-details .logo {
+	opacity: 1;
+}
+.sidebar .logo-details i {
+	font-size: 30px;
+	color: var(--color-text);
+}
+.sidebar .logo-details .logo .logo-name {
+	font-size: 20px;
+	font-weight: 400;
+	color: var(--color-text);
+	margin-left: 15px;
+}
+.sidebar .logo-details #btn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 0;
+}
+.sidebar .search {
+	position: relative;
+	margin: 10px 0;
+}
+.sidebar .search input {
+	width: 100%;
+	height: 50px;
+	color: var(--bgc-layout);
+	border-radius: 10px;
+	border: none;
+	background-color: var(--bgc-layout);
+	font-size: 20px;
+	transition: 0.4s;
+}
+.sidebar.active input {
+	color: var(--color-text);
+	padding: 0 20px 0 50px;
+}
+
+.sidebar .search i {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	color: var(--color-text);
+	font-size: 20px;
+}
+.sidebar .list-nav li {
+	position: relative;
+	list-style: none;
+	border-radius: 10px;
+	transition: 0.4s;
+}
+.sidebar .list-nav li:hover,
+.sidebar .list-nav li.active {
+	background-color: #fff;
+}
+.sidebar .list-nav a {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: var(--color-text);
+	white-space: nowrap;
+}
+.sidebar .list-nav .links_name {
+	opacity: 0;
+	transition: 0.4s;
+}
+.sidebar.active .list-nav .links_name {
+	opacity: 1;
+}
+.sidebar .list-nav li:hover a,
+.sidebar .list-nav li.active a {
+	color: var(--bgc);
+}
+.sidebar .list-nav li .tooltip {
+	position: absolute;
+	top: 50%;
+	left: 150%;
+	padding: 10px 20px;
+	border-radius: 10px;
+	background-color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+	opacity: 0;
+	transition: 0.4s;
+}
+.sidebar .list-nav li:hover .tooltip {
+	top: 0%;
+	opacity: 1;
+}
+.sidebar.active .list-nav li:hover .tooltip {
+	display: none;
+}
+.sidebar .user {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	padding: 10px;
+	background-color: var(--bgc-layout);
+}
+.sidebar .user .user-detail {
+	display: flex;
+	align-items: center;
+	opacity: 0;
+	transition: 0.4s;
+}
+.sidebar.active .user .user-detail {
+	opacity: 1;
+}
+.sidebar .user .user-detail img {
+	width: 50px;
+	height: 50px;
+	object-fit: cover;
+	object-position: center;
+	border-radius: 10px;
+}
+.sidebar .user i {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	right: 10px;
+	color: #fff;
+}
+.sidebar .user .user-detail .user-info {
+	color: var(--color-text);
+	margin-left: 10px;
+}
+.sidebar .user .user-detail .user-info .user-contact {
+	font-size: 12px;
 }

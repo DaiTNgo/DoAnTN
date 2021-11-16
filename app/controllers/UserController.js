@@ -31,6 +31,15 @@ class User {
 	index(req, res) {
 		res.render('index');
 	}
+	day(req, res) {
+		res.render('day');
+	}
+	month(req, res) {
+		res.render('month');
+	}
+	hour(req, res) {
+		res.render('hour');
+	}
 	// GET /logout
 	logout(req, res) {
 		res.clearCookie('token').redirect('/login');
