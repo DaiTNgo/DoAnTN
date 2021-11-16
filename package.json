@@ -8,6 +8,7 @@
         "sass": "sass -w ./resources/scss/style.scss ./public/stylesheets/style.css"
     },
     "dependencies": {
+        "axios": "^0.24.0",
         "config": "^3.3.6",
         "cookie-parser": "~1.4.4",
         "debug": "~2.6.9",
@@ -21,7 +22,6 @@
         "pug": "2.0.0-beta11"
     },
     "devDependencies": {
-        "axios": "^0.24.0",
         "connect-livereload": "^0.6.1",
         "livereload": "^0.9.3",
         "morgan": "^1.9.1",
