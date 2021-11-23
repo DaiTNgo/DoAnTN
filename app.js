@@ -24,7 +24,7 @@ liveReloadServer.server.once('connection', () => {
 });
 
 var app = express();
-// app.use(connectLivereload());
+app.use(connectLivereload());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'resources', 'views'));

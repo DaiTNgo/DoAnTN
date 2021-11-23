@@ -1,13 +1,7 @@
 const SolarModel = require('../models/Solar');
 class Solar {
-	// [POST] /
-	async send(req, res) {
-		const newData = new SolarModel(req.body);
-		await newData.save();
-		return res.json({ message: 'success' });
-	}
-    
-	// [GET] /api/time
+	// ------------------------------------
+	// [GET] /api/time {dev}
 	async receive(req, res) {
 		//Find
 		const data = await SolarModel.find(
@@ -33,7 +27,7 @@ class Solar {
 		});
 		res.json('OK!');
 	}
-	// [DELETE] /api/delete/date
+	// [DELETE] /api/delete/date {dev}
 	async deleteDate(req, res) {
 		const { date } = req.body;
 
@@ -45,6 +39,15 @@ class Solar {
 
 		res.json('OK!');
 	}
+	// ------------------------------------
+
+	// [POST] /
+	async send(req, res) {
+		const newData = new SolarModel(req.body);
+		await newData.save();
+		return res.json({ message: 'success' });
+	}
+
 	// [POST] /api/date
 	async getDate(req, res) {
 		const { date } = req.body;
@@ -61,6 +64,8 @@ class Solar {
 		).lean();
 		res.json(data);
 	}
+
+	// [POST] /api/hour
 	async getHour(req, res) {
 		const { date } = req.body;
 		const currentHour = new Date(date).setMinutes(0);
@@ -77,6 +82,8 @@ class Solar {
 
 		res.json(data);
 	}
+
+	// [POST] /api/month
 	async getMonth(req, res) {
 		const { currentMonth, nextMonth } = req.body;
 		const data = await SolarModel.find(
@@ -89,6 +96,18 @@ class Solar {
 			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
 		).lean();
 
+		res.json(data);
+	}
+
+	// [POST] /api/current-time
+	async currentTime(req, res) {
+		const data = await SolarModel.find(
+			{},
+			{ _id: 0, createdAt: 1, volt: 1, amp: 1 },
+			{ sort: { createdAt: -1 } }
+		)
+			.limit(1)
+			.lean();
 		res.json(data);
 	}
 }

@@ -28,20 +28,20 @@ class User {
 			.redirect('/');
 	}
 	// GET /
-	index(req, res) {
+	index(_, res) {
 		res.render('index');
 	}
-	day(req, res) {
+	day(_, res) {
 		res.render('day');
 	}
-	month(req, res) {
+	month(_, res) {
 		res.render('month');
 	}
-	hour(req, res) {
+	hour(_, res) {
 		res.render('hour');
 	}
 	// GET /logout
-	logout(req, res) {
+	logout(_, res) {
 		res.clearCookie('token').redirect('/login');
 	}
 }

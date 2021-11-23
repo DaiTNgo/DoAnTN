@@ -1,5 +1,10 @@
 extends ./layouts/layout
 block input
     input(type="date" id="date" class="time")
+
+block button 
+    button#btn-volt Volt
+    button#btn-amp Amp
+    button#btn-power Power
 block script 
     script(type='module' src="js/day.js") 

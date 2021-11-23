@@ -4,6 +4,7 @@ html(lang="en")
         meta(charset="UTF-8")
         meta(http-equiv="X-UA-Compatible", content="IE=edge")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="icon" type="image/x-icon" href="/images/favicon.ico")
         link(rel='stylesheet', href='/stylesheets/style.css')
 
         link(href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
@@ -19,10 +20,13 @@ html(lang="en")
         title= Document
     body
         include sidebar.pug 
-        
-        .chartCard
-            .chartBox 
-                block input
+        .container
+            include ../includes/show-current.pug
+            .chartCard
+                .chartBox 
+                    block input
+            block button
         block script 
+        script(src="/js/currentValue.js ") 
       
     
