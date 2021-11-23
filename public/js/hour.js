@@ -1,27 +1,19 @@
 import { renderChart, renderHourArr } from './render.js';
+import toggleValue from './toggleValue.js';
 
+const btn_volt = document.getElementById('btn-volt');
+const btn_amp = document.getElementById('btn-amp');
+const btn_power = document.getElementById('btn-power');
 document.getElementById('hour').onblur = async (e) => {
-	const hour = await axios({
-		method: 'post',
-		url: 'http://localhost:3000/api/hour',
-		data: {
-			date: e.target.value,
-		},
-	});
-	const arr = renderHourArr(hour.data);
-	const myChart = renderChart(arr);
-	myChart.config.options.scales.x.time.unit = 'minute';
-	myChart.config.options.scales.x.time.parser = 'HH:mm';
-	myChart.config.options.scales.x.time.displayFormats.minute = 'HH:mm';
-	console.log(myChart.config.options.scales.x.time);
+	const time = e.target.value;
+	getCurrentHour(time);
 };
-async function getCurretnHour() {
-	const currentHour = new Date().setMinutes(0, 0, 0);
+async function getCurrentHour(time) {
 	const hour = await axios({
 		method: 'post',
-		url: 'http://localhost:3000/api/hour',
+		url: '/api/hour',
 		data: {
-			date: currentHour,
+			date: time,
 		},
 	});
 	const arr = renderHourArr(hour.data);
@@ -29,8 +21,18 @@ async function getCurretnHour() {
 	myChart.config.options.scales.x.time.unit = 'minute';
 	myChart.config.options.scales.x.time.parser = 'HH:mm';
 	myChart.config.options.scales.x.time.displayFormats.minute = 'HH:mm';
+	myChart.update();
+	btn_volt.onclick = () => {
+		toggleValue(0, myChart);
+	};
+	btn_amp.onclick = () => {
+		toggleValue(1, myChart);
+	};
+	btn_power.onclick = () => {
+		toggleValue(2, myChart);
+	};
 }
-getCurretnHour();
+getCurrentHour(new Date().setMinutes(0, 0, 0));
 const list = document.querySelector('.list-nav');
 const li_list = list.children;
 

@@ -95,7 +95,9 @@ class Solar {
 			},
 			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
 		).lean();
-
+		if (!data) {
+			res.json([]);
+		}
 		res.json(data);
 	}
 

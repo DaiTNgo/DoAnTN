@@ -20,13 +20,16 @@ html(lang="en")
         title= Document
     body
         include sidebar.pug 
-        .container
-            include ../includes/show-current.pug
-            .chartCard
-                .chartBox 
-                    block input
-            block button
+        .container.d-flex
+            .f-2
+                include ../includes/show-current.pug
+            .f-8
+                block total
+                .chartCard
+                    .chartBox 
+                        block input
+                        include ../includes/button.pug
         block script 
-        script(src="/js/currentValue.js ") 
+     
       
     
