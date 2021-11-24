@@ -8,8 +8,8 @@ html(lang="en")
         link(rel='stylesheet', href='/stylesheets/style.css')
 
         link(href="https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css"
-			rel="stylesheet")
-	
+            rel="stylesheet")
+
         script(
             src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"
             integrity="sha512-u9akINsQsAkG9xjc1cnGF4zw5TFDwkxuc9vUp5dltDWYCSmyd0meygbvgXrlc/z7/o4a19Fb5V0OUE58J7dcyw=="
@@ -19,17 +19,18 @@ html(lang="en")
         script(src="/js/chartjs-adapter-date-fns.bundle.min.js")
         title= Document
     body
-        include sidebar.pug 
-        .container.d-flex
-            .f-2
-                include ../includes/show-current.pug
-            .f-8
-                block total
-                .chartCard
-                    .chartBox 
-                        block input
-                        include ../includes/button.pug
+        include sidebar.pug
+        .container
+            block title
+            block content
+                .content-chart
+                    .content-chart-right
+                        .chartCard
+                            .chartBox 
+                                block input
+                                include ../includes/button.pug
+                    .content-chart-left
+                        include ../includes/show-current.pug
         block script 
-     
-      
-    
+
+

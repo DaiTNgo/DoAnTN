@@ -1,19 +1,9 @@
 extends ./layouts/layout
-block total 
-    .total-wrapper 
-        h1 Day  
-        .total-list
-            .total-volt.date-total-volt 
-                span.date-total-volt-value 124
-                |V
-            .total-amp.date-total-amp 
-                span.date-total-amp-value 124
-                |A
-            .total-power.date-total-power 
-                span.date-total-volt-value 124
-                |W
-block input
+
+block title   
+    h1 Day
+block input   
     input(type="date" id="date" class="time")
-       
+
 block script 
     script(type='module' src="js/day.js") 

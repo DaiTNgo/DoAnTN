@@ -1,6 +1,6 @@
 // Test lấy data
 async () => {
-	const arr = await axios.get('http://localhost:3000/api/time');
+	const arr = await axios.get('/api/time');
 	arr.data.forEach((element) => {
 		if (
 			Date.parse(element.createdAt) > Date.parse('2021-11-07 17:') &&
@@ -8,29 +8,6 @@ async () => {
 		)
 			console.log(element);
 	});
-
-	// axios
-	// 	.all([
-	// 		axios.get('https://api.github.com/users/anonystick'),
-	// 		axios.get('https://api.github.com/users/anonystick'),
-	// 	])
-	// 	.then(
-	// 		axios.spread((obj1, obj2) => {
-	// 			// Both requests are now complete
-	// 			console.log(
-	// 				obj1.data.login +
-	// 					' has ' +
-	// 					obj1.data.public_repos +
-	// 					' public repos on GitHub'
-	// 			);
-	// 			console.log(
-	// 				obj2.data.login +
-	// 					' has ' +
-	// 					obj2.data.public_repos +
-	// 					' public repos on GitHub'
-	// 			);
-	// 		})
-	// 	);
 };
 
 // -------------------------------------

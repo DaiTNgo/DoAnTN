@@ -24,30 +24,35 @@ body {
 .container {
 	margin-left: 70px;
 	transition: all 0.3s;
+	height: 100vh;
 }
-.sidebar.active ~ .container {
-	margin-left: 240px;
+/* ----------------------------- */
+h1 {
+	padding-bottom: 1rem;
 }
+.content-chart {
+	display: flex;
+	width: 95%;
+	margin: 0 auto;
+}
+.content-chart-right {
+	flex: 1 1 auto;
+	margin-right: 1rem;
+}
+.content-chart-left {
+	width: fit-content;
+	flex-shrink: 0;
+}
+/* ----------------------------- */
+
 .chartCard {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
-.d-flex {
-	display: flex;
-	gap: 10px;
-}
-.f-2 {
-	flex: 1 1 auto;
-	order: 2;
-}
-.f-8 {
-	flex: 1 1 80%;
-	order: 1;
-}
 .chartBox {
 	position: relative;
-	width: 90%;
+	width: 100%;
 	padding: 20px;
 	border-radius: 20px;
 	box-shadow: 0 0 10px 0 rgb(179, 170, 170);
@@ -348,29 +353,3 @@ circle {
 }
 
 /* ----------------------------------- */
-.total-wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-}
-.total-list {
-	display: flex;
-}
-.total-list > * {
-	margin-left: 20px;
-}
-.total-volt {
-	padding: 20px 40px;
-	background-image: linear-gradient(to bottom, #906fd9, #ffe5dd);
-	border-radius: 20px;
-}
-.total-amp {
-	padding: 20px 40px;
-	background-image: linear-gradient(to bottom, #f74646, #ffe5dd);
-	border-radius: 20px;
-}
-.total-power {
-	padding: 20px 40px;
-	background-image: linear-gradient(to bottom, var(--color-power), #ffe5dd);
-	border-radius: 20px;
-}
