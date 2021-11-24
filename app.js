@@ -2,9 +2,6 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var livereload = require('livereload');
-var connectLivereload = require('connect-livereload');
 var methodOverride = require('method-override');
 require('dotenv').config();
 
@@ -15,16 +12,7 @@ const route = require('./routes/index');
 
 const publicDirectory = path.join(__dirname, 'public');
 
-var liveReloadServer = livereload.createServer();
-liveReloadServer.watch(publicDirectory);
-liveReloadServer.server.once('connection', () => {
-	setTimeout(() => {
-		liveReloadServer.refresh('/');
-	}, 100);
-});
-
 var app = express();
-app.use(connectLivereload());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'resources', 'views'));
@@ -33,7 +21,6 @@ app.set('view engine', 'pug');
 // Middleware
 app.use(methodOverride('_method'));
 // app.use(login());
-app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
