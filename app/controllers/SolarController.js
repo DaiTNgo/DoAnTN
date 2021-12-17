@@ -43,74 +43,88 @@ class Solar {
 
 	// [POST] /
 	async send(req, res) {
-		const newData = new SolarModel(req.body);
-		await newData.save();
-		return res.json({ message: 'success' });
+		try {
+			const { volt, amp } = req.body;
+			const newData = new SolarModel({ volt, amp });
+			await newData.save();
+			res.status(201).json({ message: 'success' });
+		} catch (error) {
+			res
+				.status(400)
+				.json({ message: 'Send data fail', error: error.messages });
+		}
 	}
 
 	// [POST] /api/date
 	async getDate(req, res) {
-		const { date } = req.body;
-		const currentDate = new Date(date).getTime();
-		const nextDate = currentDate + 24 * 60 * 60 * 1000;
-		const data = await SolarModel.find(
-			{
-				createdAt: {
-					$gte: currentDate,
-					$lt: nextDate,
+		try {
+			const { nextDate, currentDate } = req.body;
+			const data = await SolarModel.find(
+				{
+					createdAt: {
+						$gte: currentDate,
+						$lt: nextDate,
+					},
 				},
-			},
-			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
-		).lean();
-		res.json(data);
+				{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
+			).lean();
+			res.json(data); //if no data then return []
+		} catch (error) {
+			res.status(400).json({ message: 'Get data fail', error: error.messages });
+		}
 	}
 
 	// [POST] /api/hour
 	async getHour(req, res) {
-		const { date } = req.body;
-		const currentHour = new Date(date).setMinutes(0);
-		const nextHour = currentHour + 60 * 60 * 1000;
-		const data = await SolarModel.find(
-			{
-				createdAt: {
-					$gte: currentHour,
-					$lt: nextHour,
-				},
-			},
-			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
-		).lean();
+		try {
+			const { currentHour, nextHour } = req.body;
 
-		res.json(data);
+			const data = await SolarModel.find(
+				{
+					createdAt: {
+						$gte: currentHour,
+						$lt: nextHour,
+					},
+				},
+				{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
+			).lean();
+			res.json(data);
+		} catch (error) {
+			res.status(400).json({ message: 'Get data fail', error: error.messages });
+		}
 	}
 
 	// [POST] /api/month
 	async getMonth(req, res) {
-		const { currentMonth, nextMonth } = req.body;
-		const data = await SolarModel.find(
-			{
-				createdAt: {
-					$gte: new Date(currentMonth).getTime(),
-					$lt: new Date(nextMonth).getTime(),
+		try {
+			const { currentMonth, nextMonth } = req.body;
+			const data = await SolarModel.find(
+				{
+					createdAt: {
+						$gte: new Date(currentMonth).getTime(),
+						$lt: new Date(nextMonth).getTime(),
+					},
 				},
-			},
-			{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
-		).lean();
-		if (!data) {
-			res.json([]);
+				{ _id: 0, createdAt: 1, volt: 1, amp: 1 }
+			).lean();
+			res.json(data);
+		} catch (error) {
+			res.status(400).json({ message: 'Get data fail', error: error.messages });
 		}
-		res.json(data);
 	}
 
 	// [POST] /api/current-time
 	async currentTime(req, res) {
-		const data = await SolarModel.find(
-			{},
-			{ _id: 0, createdAt: 1, volt: 1, amp: 1 },
-			{ sort: { createdAt: -1 } }
-		)
-			.limit(1)
-			.lean();
-		res.json(data);
+		try {
+			const data = await SolarModel.findOne(
+				{},
+				{ _id: 0, createdAt: 1, volt: 1, amp: 1 },
+				{ sort: { createdAt: -1 } }
+			).lean();
+			res.json(data);
+		} catch (error) {
+			res.status(400).json({ message: 'Get data fail', error: error.messages });
+		}
 	}
 }
 module.exports = new Solar();

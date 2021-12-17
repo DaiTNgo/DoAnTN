@@ -97,15 +97,10 @@ function currentAmp(val) {
 }
 async function getCurrentValue() {
 	const { data } = await axios.get('/api/current-time');
-	const { volt, amp } = data[0];
+	const { volt, amp } = data;
 	currentVolt(volt.toFixed(2));
 	currentAmp(amp.toFixed(2));
 	currentPower((volt * amp).toFixed(2));
 }
 getCurrentValue();
-setInterval(async () => {
-	const { data } = await axios.get('http://localhost:3000/api/current-time');
-	const { volt, amp } = data[0];
-	currentVolt(volt.toFixed(2));
-	currentAmp(amp.toFixed(2));
-}, 60000);
+setInterval(getCurrentValue, 60000);

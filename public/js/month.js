@@ -1,31 +1,47 @@
 import { sliceDay } from './sliceTime.js';
-import { renderChart, renderMonthArr } from './render.js';
-import toggleValue from './toggleValue.js';
+import { renderChart, calculateMonthValue } from './render.js';
+import toggleYAxis from './toggleValue.js';
 
 const btn_volt = document.getElementById('btn-volt');
 const btn_amp = document.getElementById('btn-amp');
 const btn_power = document.getElementById('btn-power');
+
 document.getElementById('month').onblur = async (e) => {
 	const date = e.target.value;
 	getCurrentMonth(date);
 };
 async function getCurrentMonth(time) {
-	const date = time;
-	const currentMonth = new Date(date).getMonth() + 1;
+	const currentMonth = new Date(time).getMonth() + 1;
 	const nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;
-	let year = new Date(date).getFullYear();
-	year = currentMonth === 12 ? year + 1 : year;
+	let year = new Date(time).getFullYear();
+	let year_nextMonth = currentMonth === 12 ? year + 1 : year;
+
 	const month = await axios({
 		method: 'post',
 		url: '/api/month',
 		data: {
 			currentMonth: `${year}-${currentMonth}-1 0:`,
-			nextMonth: `${year}-${nextMonth}-1 0:`,
+			nextMonth: `${year_nextMonth}-${nextMonth}-1 0:`,
 		},
 	});
-	const arrDay = sliceDay([...month.data], month.data);
-	const arr = renderMonthArr(arrDay);
-	const myChart = renderChart(arr);
+
+	if (month.data.length === 0) {
+		document.getElementById('message').innerHTML = 'No Data';
+		const myChart = document.getElementById('myChart');
+		if (myChart) {
+			myChart.parentElement.removeChild(myChart);
+		}
+	} else {
+		document.getElementById('message').innerHTML = '';
+		const pureArr = month.data;
+		const cloneArr = JSON.parse(JSON.stringify(pureArr));
+		const arrDay = sliceDay(cloneArr, pureArr);
+		const arr = calculateMonthValue(arrDay);
+		const myChart = renderChart(arr);
+		configChart(myChart);
+	}
+}
+function configChart(myChart) {
 	myChart.config.options.scales.x.time.unit = 'day';
 	myChart.config.options.plugins.tooltip.callbacks = {
 		title: function (params) {
@@ -35,13 +51,13 @@ async function getCurrentMonth(time) {
 	};
 	myChart.update();
 	btn_volt.onclick = () => {
-		toggleValue(0, myChart);
+		toggleYAxis(0, myChart);
 	};
 	btn_amp.onclick = () => {
-		toggleValue(1, myChart);
+		toggleYAxis(1, myChart);
 	};
 	btn_power.onclick = () => {
-		toggleValue(2, myChart);
+		toggleYAxis(2, myChart);
 	};
 }
 getCurrentMonth(Date.now());

@@ -1,10 +1,15 @@
-POST http://localhost:3000/api
+POST https://doantnbk.herokuapp.com/api
 Content-Type: application/json
 
 {
-    "volt":51,
-    "amp":51
+    "volt":"312",
+    "amp":"142"
 }
+
+###
+GET https://doantnbk.herokuapp.com/api/current-time
+
+
 
 ###
 GET http://localhost:3000/api

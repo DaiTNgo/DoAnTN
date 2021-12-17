@@ -29,8 +29,11 @@ html(lang="en")
                             .chartBox 
                                 block input
                                 include ../includes/button.pug
+                        p#message No Data
                     .content-chart-left
                         include ../includes/show-current.pug
+            
         block script 
+        script(src="js/sidebar.js") 
 
 

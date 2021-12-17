@@ -1,195 +1,4 @@
-// Test lấy data
-async () => {
-	const arr = await axios.get('/api/time');
-	arr.data.forEach((element) => {
-		if (
-			Date.parse(element.createdAt) > Date.parse('2021-11-07 17:') &&
-			Date.parse(element.createdAt) < Date.parse('2021-11-07 18:')
-		)
-			console.log(element);
-	});
-};
-
-// -------------------------------------
-/*
-function render(arrTime) {
-	// setup
-	const data = {
-		datasets: [
-			{
-				label: 'Volt',
-				data: arr,
-				backgroundColor: [
-					'rgba(255, 26, 104, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)',
-					'rgba(0, 0, 0, 0.2)',
-				],
-				borderColor: [
-					'rgba(255, 26, 104, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)',
-					'rgba(0, 0, 0, 1)',
-				],
-				borderWidth: 3,
-				pointStyle: 'circle',
-				yAxisID: 'volt',
-				parsing: {
-					xAxisKey: 'time',
-					yAxisKey: 'volt',
-				},
-			},
-			{
-				label: 'Amp',
-				data: arr,
-				backgroundColor: [
-					'rgba(255, 26, 104, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)',
-					'rgba(0, 0, 0, 0.2)',
-				],
-				borderColor: [
-					'rgba(255, 26, 104, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)',
-					'rgba(0, 0, 0, 1)',
-				],
-				borderWidth: 3,
-				pointStyle: 'rectRot',
-				yAxisID: 'amp',
-				parsing: {
-					xAxisKey: 'time',
-					yAxisKey: 'amp',
-				},
-			},
-			{
-				label: 'Power',
-				data: arr,
-				backgroundColor: [
-					'rgba(255, 26, 104, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)',
-					'rgba(0, 0, 0, 0.2)',
-				],
-				borderColor: [
-					'rgba(255, 26, 104, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)',
-					'rgba(0, 0, 0, 1)',
-				],
-				borderWidth: 3,
-				pointStyle: 'triangle',
-				yAxisID: 'power',
-				parsing: {
-					xAxisKey: 'time',
-					yAxisKey: 'power',
-				},
-			},
-		],
-	};
-
-	// config
-	const config = {
-		type: 'line',
-		data,
-		options: {
-			plugins: {
-				title: {
-					display: true,
-					text: 'Solar',
-					padding: 0,
-				},
-			},
-			scales: {
-				x: {
-					grid: {
-						display: false,
-					},
-					type: 'time',
-					time: {
-						unit: 'hour',
-						// displayFormats: { minute: 'HH:mm' },
-					},
-				},
-
-				volt: {
-					type: 'linear',
-					position: 'left',
-					grid: {
-						display: false,
-						borderWidth: 0,
-					},
-					ticks: {
-						color: 'rgba(255, 26, 104, 1)',
-						callback: function (value) {
-							return value + ' (V)';
-						},
-					},
-				},
-				amp: {
-					type: 'linear',
-					position: 'left',
-					ticks: {
-						color: 'rgba(54, 162, 235, 1)',
-						callback: function (value) {
-							return value + ' (A)';
-						},
-					},
-					grid: {
-						display: false,
-						borderWidth: 0,
-					},
-				},
-				power: {
-					type: 'linear',
-					position: 'left',
-					ticks: {
-						color: 'rgba(255, 206, 86, 1)',
-						callback: function (value) {
-							return value + ' (W)';
-						},
-					},
-					grid: {
-						display: false,
-						borderWidth: 0,
-					},
-				},
-			},
-		},
-	};
-
-	// render init block
-	if (document.getElementById('myChart'))
-		document
-			.getElementById('myChart')
-			.parentElement.removeChild(document.getElementById('myChart'));
-
-	document
-		.querySelector('.chartBox')
-		.insertAdjacentHTML('afterbegin', `<canvas id="myChart"></canvas>`);
-	const myChart = new Chart(document.getElementById('myChart'), config);
-}
-*/
-
-function renderHourArr(arrTime) {
+function calculateHourValue(arrTime) {
 	const arr = arrTime.map((item) => {
 		let volt = 0;
 		let amp = 0;
@@ -205,7 +14,7 @@ function renderHourArr(arrTime) {
 	return arr;
 }
 
-function renderMonthArr(arrTime) {
+function calculateMonthValue(arrTime) {
 	const arr = arrTime.map((list) => {
 		let volt = 0;
 		let amp = 0;
@@ -223,7 +32,7 @@ function renderMonthArr(arrTime) {
 	return arr;
 }
 
-function renderDayArr(arrTime) {
+function calculateDayValue(arrTime) {
 	const arr = arrTime.map((list) => {
 		let volt = 0;
 		let amp = 0;
@@ -326,6 +135,7 @@ function renderChart(arr) {
 		type: 'line',
 		data,
 		options: {
+			// maintainAspectRatio: false,
 			plugins: {
 				legend: {
 					display: false,
@@ -414,4 +224,9 @@ function renderChart(arr) {
 	const myChart = new Chart(document.getElementById('myChart'), config);
 	return myChart;
 }
-export { renderChart, renderDayArr, renderMonthArr, renderHourArr };
+export {
+	renderChart,
+	calculateHourValue,
+	calculateMonthValue,
+	calculateDayValue,
+};

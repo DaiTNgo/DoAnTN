@@ -1,35 +1,53 @@
 import { sliceHour } from './sliceTime.js';
-import { renderChart, renderDayArr } from './render.js';
-import toggleValue from './toggleValue.js';
+import { renderChart, calculateDayValue } from './render.js';
+import toggleYAxis from './toggleValue.js';
 const btn_volt = document.getElementById('btn-volt');
 const btn_amp = document.getElementById('btn-amp');
 const btn_power = document.getElementById('btn-power');
+
 document.getElementById('date').onblur = async (e) => {
 	const time = e.target.value;
 	getCurrentDate(time);
 };
 async function getCurrentDate(time) {
+	const currentDate = new Date(time).getTime();
+	const nextDate = currentDate + 24 * 60 * 60 * 1000;
+
 	const date = await axios({
 		method: 'post',
 		url: '/api/date',
 		data: {
-			date: time,
+			currentDate,
+			nextDate,
 		},
 	});
-	const arrDate = [...date.data];
-	const arrHour = sliceHour(arrDate, date.data);
-	const arr = renderDayArr(arrHour);
-	const myChart = renderChart(arr);
+	if (date.data.length === 0) {
+		document.getElementById('message').innerHTML = 'No Data';
+		const myChart = document.getElementById('myChart');
+		if (myChart) {
+			myChart.parentElement.removeChild(myChart);
+		}
+	} else {
+		document.getElementById('message').innerHTML = '';
+		const pureArr = date.data;
+		const cloneArr = JSON.parse(JSON.stringify(pureArr));
+		const arrHour = sliceHour(cloneArr, pureArr);
+		const arr = calculateDayValue(arrHour);
+		const myChart = renderChart(arr);
+		configChart(myChart);
+	}
+}
+function configChart(myChart) {
 	myChart.config.options.scales.x.time.unit = 'hour';
 	myChart.update();
 	btn_volt.onclick = () => {
-		toggleValue(0, myChart);
+		toggleYAxis(0, myChart);
 	};
 	btn_amp.onclick = () => {
-		toggleValue(1, myChart);
+		toggleYAxis(1, myChart);
 	};
 	btn_power.onclick = () => {
-		toggleValue(2, myChart);
+		toggleYAxis(2, myChart);
 	};
 }
 getCurrentDate(new Date().setHours(0, 0, 0, 0));
@@ -38,8 +56,7 @@ const list = document.querySelector('.list-nav');
 const li_list = list.children;
 
 for (let li of li_list) {
-	for (let li of li_list) {
-		li.classList.remove('active');
-	}
+	li.classList.remove('active');
 }
+
 document.querySelector('.item-day').classList.add('active');

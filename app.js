@@ -20,7 +20,6 @@ app.set('view engine', 'pug');
 
 // Middleware
 app.use(methodOverride('_method'));
-// app.use(login());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
