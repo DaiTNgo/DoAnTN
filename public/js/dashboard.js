@@ -301,9 +301,9 @@ function formatTime(value) {
 	const month = new Date(value).getMonth();
 
 	return {
-		hour: `${hour}:${minute} ${day}/${month}`,
-		day: `${hour}h ${day}/${month}`,
-		month: `${day}/${month}`,
+		hour: `${hour}:${minute} ${day}/${month + 1}`,
+		day: `${hour}h ${day}/${month + 1}`,
+		month: `${day}/${month + 1}`,
 	};
 }
 

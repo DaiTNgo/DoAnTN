@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const uri = `mongodb+srv://${process.env.USERNAME_MONGODB}:${process.env.PASSWORD_MONGODB}@doantn.qrqas.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://${process.env.USERNAME_MONGODB}:${process.env.PASSWORD_MONGODB}@cluster0.vl3oh.mongodb.net/solar-tracking?retryWrites=true&w=majority`;
 
 async function connect() {
 	try {
