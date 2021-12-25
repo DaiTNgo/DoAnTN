@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
     "volt":"312",
-    "amp":"142"
+    "amp":"0.000001"
 }
 
 ###

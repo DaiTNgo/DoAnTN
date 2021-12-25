@@ -83,6 +83,7 @@ h1 {
 	padding: 10px;
 	background-color: var(--bgc);
 	transition: 0.4s;
+	z-index: 999;
 }
 .sidebar.active {
 	width: 240px;
@@ -105,11 +106,13 @@ h1 {
 	color: var(--color-text);
 }
 .sidebar .logo-details .logo .logo-name {
+	margin: 20px 0 20px 15px;
 	font-size: 20px;
 	font-weight: 400;
 	color: var(--color-text);
-	margin-left: 15px;
+
 	visibility: hidden;
+	white-space: nowrap;
 }
 .sidebar.active .logo-details .logo .logo-name {
 	visibility: visible;
@@ -245,11 +248,14 @@ h1 {
 	font-size: 12px;
 }
 /* ----------------------- */
-
 .box {
 	display: flex;
 	flex-direction: column;
 	gap: 10px;
+}
+.table.box {
+	width: 50%;
+	margin: auto;
 }
 
 .volt-wrapper,
@@ -260,8 +266,10 @@ h1 {
 	background-color: #fff;
 	box-shadow: 0 0 10px 0 rgb(179, 170, 170);
 	border-radius: 10px;
+	display: flex;
 }
 .outer {
+	position: relative;
 	margin: auto;
 	width: var(--width);
 	height: var(--height);
@@ -358,4 +366,28 @@ circle {
 #message {
 	margin-top: 2rem;
 	text-align: center;
+}
+
+table,
+th,
+td {
+	border: 0px solid black;
+	border-collapse: collapse;
+}
+th {
+	background-color: #f4f4f4;
+}
+td {
+	width: 250px;
+	padding: 20px;
+	text-align: center;
+}
+.table .hour {
+	background-color: var(--color-amp);
+}
+.table .day {
+	background-color: var(--color-volt);
+}
+.table .month {
+	background-color: var(--color-power);
 }
