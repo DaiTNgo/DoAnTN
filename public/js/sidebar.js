@@ -15,11 +15,6 @@ for (let li of li_list) {
 }
 btn.onclick = () => {
 	sidebar.classList.toggle('active');
-	if (sidebar.classList.contains('active')) {
-		document.querySelector('.container').style.marginLeft = '240px';
-	} else {
-		document.querySelector('.container').style.marginLeft = '70px';
-	}
 	menuChange();
 };
 const menuChange = () => {

@@ -17,8 +17,8 @@ html(lang="en")
         title Dash Board 
     body    
         include layouts/sidebar
-        //- h1 Dash Board
         .box.table
+            h1 Dash Board 
             .volt-wrapper
                 .outer
                     .inner
@@ -33,7 +33,7 @@ html(lang="en")
                         circle(cx='75', cy='75', r='65', stroke-linecap='round')
                 table
                     thead 
-                        th 
+                        th Time
                         th.min Min 
                         th.max Max
                     tbody#tbody-volt
@@ -63,7 +63,7 @@ html(lang="en")
                         circle(cx='75', cy='75', r='65', stroke-linecap='round')
                 table 
                     thead 
-                        th 
+                        th Time
                         th Min 
                         th Max
                     tbody#tbody-amp
@@ -93,10 +93,10 @@ html(lang="en")
                         circle(cx='75', cy='75', r='65', stroke-linecap='round')
                 table 
                     thead 
-                        th 
+                        th Time
                         th Min 
                         th Max
-                    tbody 
+                    tbody#tbody-power
                         tr
                             td.hour Hour
                             td 13:3 - 1W

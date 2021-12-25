@@ -135,7 +135,7 @@ function renderChart(arr) {
 		type: 'line',
 		data,
 		options: {
-			// maintainAspectRatio: false,
+			maintainAspectRatio: true,
 			plugins: {
 				legend: {
 					display: false,
@@ -177,6 +177,7 @@ function renderChart(arr) {
 						display: false,
 						borderWidth: 0,
 					},
+					min: 0,
 
 					ticks: {
 						color: '#906fd9',
@@ -184,7 +185,7 @@ function renderChart(arr) {
 							return value + ' (V)';
 						},
 					},
-					grace: '5%',
+					// grace: '100px',
 				},
 				amp: {
 					type: 'linear',
@@ -195,11 +196,13 @@ function renderChart(arr) {
 							return value + ' (A)';
 						},
 					},
+					min: 0,
+
 					grid: {
 						display: false,
 						borderWidth: 0,
 					},
-					grace: '5%',
+					// grace: '100px',
 				},
 				power: {
 					type: 'linear',
@@ -210,11 +213,13 @@ function renderChart(arr) {
 							return value + ' (W)';
 						},
 					},
+					min: 0,
+
 					grid: {
 						display: false,
 						borderWidth: 0,
 					},
-					grace: '5%',
+					// grace: '100px',
 				},
 			},
 		},
