@@ -4,13 +4,16 @@ class User {
 		res.render('index');
 	}
 	day(_, res) {
-		res.render('day');
+		res.render('day', { name: 'Day' });
 	}
 	month(_, res) {
-		res.render('month');
+		res.render('month', { name: 'Month' });
 	}
 	hour(_, res) {
-		res.render('hour');
+		res.render('hour', { name: 'Hour' });
+	}
+	setting(_, res) {
+		res.render('setting');
 	}
 }
 module.exports = new User();

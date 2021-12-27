@@ -6,5 +6,6 @@ router.get('/', UserController.index);
 router.get('/day', UserController.day);
 router.get('/month', UserController.month);
 router.get('/hour', UserController.hour);
+router.get('/setting', UserController.setting);
 
 module.exports = router;
