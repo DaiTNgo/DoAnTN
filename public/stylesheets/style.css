@@ -81,6 +81,8 @@ h1 {
 }
 .sidebar {
 	position: fixed;
+	display: flex;
+	flex-direction: column;
 	width: 70px;
 	height: 100vh;
 	padding: 10px;
@@ -152,14 +154,20 @@ h1 {
 	color: var(--color-text);
 	font-size: 20px;
 }
+.sidebar .list-nav {
+	display: flex;
+	flex-direction: column;
+	flex-grow: 1;
+}
 .sidebar .list-nav li {
 	position: relative;
 	list-style: none;
 	border-radius: 10px;
 	transition: 0.4s;
 }
-
-/* .sidebar .list-nav li:hover, */
+.sidebar .list-nav li:last-child {
+	margin-top: auto;
+}
 .sidebar .list-nav li > a:hover,
 .sidebar .list-nav li.active {
 	background-color: #fff;
@@ -180,7 +188,6 @@ h1 {
 	opacity: 1;
 	display: block;
 }
-/* .sidebar .list-nav li:hover a, */
 .sidebar .list-nav li > a:hover,
 .sidebar .list-nav li.active a {
 	color: var(--bgc);
@@ -207,7 +214,6 @@ h1 {
 .sidebar.active .list-nav li > a:hover + .tooltip {
 	display: none;
 }
-
 .sidebar .user {
 	position: absolute;
 	bottom: 0;
@@ -250,7 +256,6 @@ h1 {
 .sidebar .user .user-detail .user-info .user-contact {
 	font-size: 12px;
 }
-/* ----------------------- */
 .box {
 	display: flex;
 	flex-direction: column;
@@ -264,7 +269,6 @@ h1 {
 .sidebar.active + .table.box {
 	margin-left: 240px;
 }
-
 .volt-wrapper,
 .amp-wrapper,
 .power-wrapper {
@@ -375,17 +379,13 @@ circle {
 #btn-power {
 	cursor: pointer;
 }
-
-/* ----------------------------------- */
 #message {
 	margin-top: 2rem;
 	text-align: center;
 }
-
 table,
 th,
 td {
-	/* border: 1px solid #f4f4f4; */
 	border-collapse: collapse;
 }
 tr {
