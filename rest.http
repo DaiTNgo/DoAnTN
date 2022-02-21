@@ -27,10 +27,13 @@ Content-Type: application/json
 DELETE  http://localhost:3000/logout
 
 ###
-POST http://localhost:3000/api/date
+POST http://solar-tracking-dut.herokuapp.com/api/date
 
 {
-    "date"
+    "data":{
+        "currentDate":"2022-02-17T07:35:48.159+00:00",
+        "nextDate":"2022-02-18T07:35:48.159+00:00"
+    }
 }
 
 ###

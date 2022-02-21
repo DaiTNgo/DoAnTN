@@ -82,7 +82,6 @@ async function getData() {
 	const resultDayAmp = getValueMinMax(arrDay, 'amp');
 	const resultDayVolt = getValueMinMax(arrDay, 'volt');
 	const resultDayPower = getPowerMinMax(arrDay);
-	//Day
 
 	//month
 	const monthData = await res_3;
