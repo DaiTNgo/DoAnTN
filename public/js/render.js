@@ -22,6 +22,8 @@ function calculateMonthValue(arrTime) {
 			volt += item.volt;
 			amp += item.amp;
 		}
+		volt = volt / list.length;
+		amp = amp / list.length;
 		return {
 			volt: volt,
 			amp: amp,
@@ -40,9 +42,11 @@ function calculateDayValue(arrTime) {
 			volt += item.volt;
 			amp += item.amp;
 		}
+		volt = volt / list.length;
+		amp = amp / list.length;
 		return {
-			volt: volt,
-			amp: amp,
+			volt,
+			amp,
 			power: volt * amp,
 			time: new Date(list[0].createdAt).setMinutes(0, 0, 0),
 		};
